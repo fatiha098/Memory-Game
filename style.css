@@ -1,0 +1,74 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+@font-face {
+  font-family: chopic;
+  src: url("chopic-font/Chopic3DFreeversion-Regular.ttf") 
+}
+body {
+  height: 100vh;
+  background-image: url(images/bg1.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+.container {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  border: 3px solid #ffffff61;
+  padding: 20px;
+}
+.container .card {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container .card  > div {
+  margin-bottom: 2rem;
+  border: 2px solid #8b34b35e;
+  border-radius: 10px;
+  padding: 5px;
+  cursor: pointer;
+}
+.container h2 {
+  font-family: "DynaPuff";
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #8b34b3
+}
+.container h3, p {
+  font-family: "Roboto";
+  margin-bottom: 10px;
+  color: #1b135a
+}
+.container h3{
+  font-size: 23px;
+  color: #2d381f;
+}
+/* .container h1 {
+  font-family: chopic;
+  font-size: 4rem;
+}
+.container input[type=submit]{
+  padding: 1px 30px;
+  margin-top: 15px;
+  font-size: 2.5rem;
+  font-family: chopic;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 20px;
+  border-right: 8px black solid;
+  border-bottom: 10px black solid;
+  border-top: 3px black solid;
+  border-left: 3px black solid;
+} */
+
