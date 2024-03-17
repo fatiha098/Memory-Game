@@ -5,7 +5,7 @@ var countFlip = 0 ;
 const size = 4;
 
 
-
+//items 
 const items = [
   { name: "monkeyDora", image: "images/monkeyDora.png" },
   { name: "simpson", image: "images/simpson.png" },
