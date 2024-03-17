@@ -5,7 +5,7 @@ var countFlip = 0 ;
 const size = 4;
 
 
-//items 
+
 const items = [
   { name: "monkeyDora", image: "images/monkeyDora.png" },
   { name: "simpson", image: "images/simpson.png" },
@@ -126,7 +126,7 @@ tiles.forEach(tile => {
         countFlip++;
         console.log(countFlip);
         //show pop up win
-        if (countFlip === size / 2){
+        if (countFlip / 2 === size){
           document.querySelector(".popUpWin p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
           popUpWin.style.display = "block";
         }
