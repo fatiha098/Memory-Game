@@ -5,7 +5,6 @@ var countFlip = 0 ;
 const size = 4;
 
 
-
 const items = [
   { name: "monkeyDora", image: "images/monkeyDora.png" },
   { name: "simpson", image: "images/simpson.png" },
@@ -48,6 +47,7 @@ const boardGameGenerator = (cardValues, size = 4) => {
   cardValues = [...cardValues, ...cardValues];
   //simple shuffle
   cardValues.sort(() => Math.random() - 0.5);
+
   for (let i = 0; i < size * size; i++) {
     content_game.innerHTML += `
     <div class="tile" data-tile-name="${cardValues[i].name}">
@@ -71,18 +71,65 @@ boardGameGenerator(cardValues,size)
 
 const tiles = document.querySelectorAll(".tile");
 
+// helpful man
+
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="signs">
+    <div class="paragraphe">
+      <h2>How To Play</h2>
+      <p>Hello Ready to play Memory Game ?
+          In this game you'll need your memory skills.
+          Click on any2 tiles to turn them over. 
+          If the pictures on the tiles match,
+          you have a pair!</p>
+    </div>
+    <div class="image">
+      <img class="man-image" src="../memoryGame/images/grandpa.png">
+    </div>
+  </div>
+`);
+var signs = document.querySelector(".signs");
 
 
+function showSigns(signs) {
+  // signs.style.display = "block";
+  signs.style.opacity = "1";
+  signs.style.right = "10%";
+}
+
+function hiddenSigns(signs) {
+  // signs.style.display = "none";
+  signs.style.opacity = "0";
+  signs.style.right = "0%";
+
+}
+
+setTimeout(function() {
+  showSigns(signs);
+}, 3000);
+
+setTimeout(function() {
+  hiddenSigns(signs);
+}, 30000);
+
+
+
+// pop up 
 document.body.insertAdjacentHTML('beforeend', `
   <div class="popUp">
     <div class="popUpWin">
       <p>YOUPI!  YOU WON</p>
       <p>YOU MADE ${moves} MOVES </p>
       <p>IN 00:00 </p>
+      <button type="submit" class="playBtn" >Play</button>
+      <button type="submit" class="quitBtn" >QUIT</button>
     </div>
     <div class="popUpLoose">
-      <p>OOPS! TIME OVER TRY AGAIN</p>
+      <p>OOPS! TIME OVER </p>
+      <p>TRY AGAIN</p>
       <p>YOU MADE ${moves} MOVES </p>
+      <button type="submit" class="playBtn" >Play</button>
+      <button type="submit" class="quitBtn" >QUIT</button>
     </div>
   </div>
 `);
@@ -90,6 +137,18 @@ document.body.insertAdjacentHTML('beforeend', `
 var popUpWin = document.querySelector(".popUpWin");
 var popUpLoose = document.querySelector(".popUpLoose");
 var popUp = document.querySelector(".popUp");
+var playBtn = document.querySelector(".playBtn");
+var quitBtn = document.querySelector(".quitBtn");
+
+
+playBtn.addEventListener("click", function(){
+  window.open("../memoryGame/beginner.html",target="_self");
+})
+
+quitBtn.addEventListener("click", function(){
+  window.close()
+})
+
 
 tiles.forEach(tile => {
   // Handle hover events for flipping
@@ -128,7 +187,8 @@ tiles.forEach(tile => {
         //show pop up win
         if (countFlip / 2 === size){
           document.querySelector(".popUpWin p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
-          popUpWin.style.display = "block";
+          popUp.style.left = "50%";
+          popUpWin.style.display = "block"
         }
         //show pop up loose
         // else( if time is finished and the user not yet completed ){
