@@ -28,10 +28,12 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
 .container h1 {
   font-family: "DynaPuff";
   font-size: 4rem;
-  color: var(--main-color)
+  color: var(--main-color);
+  text-shadow: 5px 5px #5db75a;
 }
 
 .container input[type=submit] {
@@ -52,11 +54,9 @@ body {
 
 }
 
-
 .container input[type=submit]:hover {
   background-color: #2b9f43;
 }
-
 
 @keyframes click {
   0% {

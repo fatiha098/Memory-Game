@@ -16,3 +16,4 @@ advanced.addEventListener("click", function(){
   // Open a new page
   window.open("start.html", "_blank");
 })
+

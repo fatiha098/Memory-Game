@@ -62,7 +62,7 @@ const boardGameGenerator = (cardValues, size = 8) => {
   }
 }
 
-const cardValues = generateRandom(8);
+const cardValues = generateRandom(size);
 boardGameGenerator(cardValues,size) 
 
 
@@ -71,7 +71,7 @@ boardGameGenerator(cardValues,size)
 
 const tiles = document.querySelectorAll(".tile");
 
-// helpful man
+// granpa signs
 
 document.body.insertAdjacentHTML('beforeend', `
   <div class="signs">
@@ -86,32 +86,36 @@ document.body.insertAdjacentHTML('beforeend', `
     <div class="image">
       <img class="man-image" src="../memory-Game/images/grandpa.png">
     </div>
-  </div>
-`);
-var signs = document.querySelector(".signs");
+  </div>`);
 
+var signs = document.querySelector(".signs");
+var xmark = document.querySelector(".xmark");
 
 function showSigns(signs) {
-  // signs.style.display = "block";
   signs.style.opacity = "1";
   signs.style.right = "10%";
 }
 
 function hiddenSigns(signs) {
-  // signs.style.display = "none";
   signs.style.opacity = "0";
   signs.style.right = "0%";
+}
 
+function closeSigns(signs){
+  xmark.addEventListener("click",function(){
+    xmark.style.color = "red";
+    hiddenSigns(signs);
+  })
 }
 
 setTimeout(function() {
   showSigns(signs);
-}, 3000);
-
+}, 1000);
+  
+closeSigns(signs);
 setTimeout(function() {
   hiddenSigns(signs);
 }, 30000);
-
 
 
 // pop up 

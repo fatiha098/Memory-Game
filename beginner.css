@@ -141,7 +141,6 @@ transform: rotateY(0deg)
   position: absolute;
   top: 18%;
   right: 0%;
-  /* display: none; */
   opacity: 0;
   transition: right 0.5s, opacity 0.5s;
 }
@@ -164,8 +163,23 @@ transform: rotateY(0deg)
   width: 15rem
 }
 
+.signs i {
+  right: 4%;
+  position: absolute;
+  top: 2%;
+  color: #19140e;
+  padding: 2px 4px;
+  font-size: 14px;
+  border-radius: 3px;
+  transition: 0.4s;
+}
 
-
+.signs i:hover {
+  cursor: pointer;
+  background-color: #1b135a;
+  color: white;
+  opacity: 0.5;
+}
 
 
 
