@@ -18,7 +18,26 @@ const items = [
   { name: "rabbit", image: "images/rabbit.png" },
   { name: "scoobydo", image: "images/scoobydo.png" },
   { name: "veemon", image: "images/veemon.png" },
-  { name: "woody", image: "images/woody.png" }
+  { name: "woody", image: "images/woody.png" },
+  { name: "arbuckle-garfield", image: "images/arbuckle-garfield.png" },
+  { name: "duck", image: "images/duck.png" },
+  { name: "garfield", image: "images/garfield.png" },
+  { name: "spongeBob", image: "images/spongeBob.png" },
+  { name: "superMario", image: "images/superMario.png" },
+  { name: "doraemon", image: "images/doraemon.png" },
+  { name: "clock", image: "images/clock.png" },
+  { name: "clock", image: "images/clock.png" },
+  { name: "powerpuffGirl", image: "images/powerpuffGirl.png" },
+  { name: "popeye", image: "images/popeye.png" },
+  { name: "chillywilly", image: "images/chillywilly.png" },
+  { name: "finn", image: "images/finn.png" },
+  { name: "yogiBear", image: "images/yogiBear.png" },
+  { name: "barbera", image: "images/barbera.png" },
+  { name: "smurf", image: "images/smurf.png" },
+  { name: "cat", image: "images/cat.png" },
+  { name: "tom", image: "images/tom.png" },
+  { name: "jocker", image: "images/jocker.png" },
+  { name: "jerry", image: "images/jerry.png" },
 ];
 
 
