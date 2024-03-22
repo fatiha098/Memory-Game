@@ -4,16 +4,16 @@ let advanced = document.querySelector("#level3");
 
 beginner.addEventListener("click", function(){
   // Open a new page
-  window.open("start.html", "_blank");
+  window.open("beginner.html", "_self");
 })
 
 intermediate.addEventListener("click", function(){
   // Open a new page
-  window.open("start.html", "_blank");
+  window.open("intermediate.html", "_self");
 })
 
 advanced.addEventListener("click", function(){
   // Open a new page
-  window.open("start.html", "_blank");
+  window.open("advanced.html", "_self");
 })
 

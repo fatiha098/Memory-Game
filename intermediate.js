@@ -18,7 +18,12 @@ const items = [
   { name: "rabbit", image: "images/rabbit.png" },
   { name: "scoobydo", image: "images/scoobydo.png" },
   { name: "veemon", image: "images/veemon.png" },
-  { name: "woody", image: "images/woody.png" }
+  { name: "woody", image: "images/woody.png" },
+  { name: "chillywilly", image: "images/chillywilly.png" },
+  { name: "arbuckle-garfield", image: "images/arbuckle-garfield.png" },
+  { name: "barbera", image: "images/barbera.png" },
+  { name: "cat", image: "images/cat.png" },
+  { name: "doraemon", image: "images/doraemon.png" }
 ];
 
 
@@ -75,6 +80,7 @@ const tiles = document.querySelectorAll(".tile");
 
 document.body.insertAdjacentHTML('beforeend', `
   <div class="signs">
+    <i class="fa-solid fa-xmark xmark"></i>
     <div class="paragraphe">
       <h2>How To Play</h2>
       <p>Hello Ready to play Memory Game ?
@@ -99,12 +105,12 @@ function showSigns(signs) {
 function hiddenSigns(signs) {
   signs.style.opacity = "0";
   signs.style.right = "0%";
+  
 }
 
 function closeSigns(signs){
   xmark.addEventListener("click",function(){
-    xmark.style.color = "red";
-    hiddenSigns(signs);
+  hiddenSigns(signs);
   })
 }
 
@@ -119,13 +125,53 @@ setTimeout(function() {
 }, 30000);
 
 
+//Initial Time
+let seconds = 0,
+  minutes = 0;
+let timerInterval;
+
+// Function to start the timer
+function startTimer() {
+  timerInterval = setInterval(function () {
+    seconds++;
+    updateTime();
+  }, 1000); // Update time every second (1000 milliseconds)
+}
+
+function updateTime() {
+  //minutes logic
+  if (seconds >= 60) {
+    minutes += 1;
+    seconds = 0;
+  }
+  //format time before displaying
+  let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
+  let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
+  let timeString = `${minutesValue}:${secondsValue}`;
+  return timeString;
+}
+
+
+//back to menu 
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="back">
+    <img class="back-to-menu" src="images/arrow-back.png">
+  </div>
+  `);
+
+var arrow_back = document.querySelector(".back-to-menu");
+arrow_back.addEventListener("click", function(){
+  window.open("index.html", "_self");
+});
+
+
 // pop up 
 document.body.insertAdjacentHTML('beforeend', `
   <div class="popUp">
     <div class="popUpWin">
       <p>YOUPI!  YOU WON</p>
       <p>YOU MADE ${moves} MOVES </p>
-      <p>IN 00:00 </p>
+      <p>IN ${updateTime()}</p>
       <button type="submit" class="playBtn" >Play</button>
       <button type="submit" class="quitBtn" >QUIT</button>
     </div>
@@ -147,7 +193,7 @@ var quitBtn = document.querySelector(".quitBtn");
 
 
 playBtn.addEventListener("click", function(){
-  window.open("../memoryGame/beginner.html",target="_self");
+  window.open("../Memory-Game/intermediate.html",target="_self");
 })
 
 quitBtn.addEventListener("click", function(){
@@ -190,7 +236,7 @@ tiles.forEach(tile => {
         countFlip++;
         console.log(countFlip);
         //show pop up win
-        if (countFlip / 2 === size){
+        if (countFlip / 3 === size){
           document.querySelector(".popUpWin p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
           popUp.style.left = "50%";
           popUpWin.style.display = "block"
