@@ -104,8 +104,7 @@ function hiddenSigns(signs) {
 
 function closeSigns(signs){
   xmark.addEventListener("click",function(){
-    xmark.style.color = "red";
-    hiddenSigns(signs);
+  hiddenSigns(signs);
   })
 }
 
@@ -141,8 +140,23 @@ function updateTime() {
   //format time before displaying
   let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
   let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
-  const timeString = `${minutesValue}:${secondsValue}`;
+  let timeString = `${minutesValue}:${secondsValue}`;
+  return timeString;
 }
+
+
+//back to menu 
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="back">
+    <img class="back-to-menu" src="images/arrow-back.png">
+  </div>
+  `);
+
+var arrow_back = document.querySelector(".back-to-menu");
+arrow_back.addEventListener("click", function(){
+  window.open("index.html", "_self");
+});
+
 
 // pop up 
 document.body.insertAdjacentHTML('beforeend', `
@@ -150,7 +164,7 @@ document.body.insertAdjacentHTML('beforeend', `
     <div class="popUpWin">
       <p>YOUPI!  YOU WON</p>
       <p>YOU MADE ${moves} MOVES </p>
-      <p>IN ${timeString} </p>
+      <p>IN ${updateTime()} </p>
       <button type="submit" class="playBtn" >Play</button>
       <button type="submit" class="quitBtn" >QUIT</button>
     </div>
@@ -181,12 +195,11 @@ quitBtn.addEventListener("click", function(){
 
 
 tiles.forEach(tile => {
-  // Handle hover events for flipping
-  tile.addEventListener('click', () => {
+    // Handle hover events for flipping
+    tile.addEventListener('click', () => {
     tile.classList.add('flipped');
     tile.style.transform = "rotateY(-180deg)";// Show backface on click
     moves += 1;
-    
   });
     
   
@@ -199,6 +212,7 @@ tiles.forEach(tile => {
       if (flippedTiles[0].getAttribute("data-tile-name") !== flippedTiles[1].getAttribute("data-tile-name") ){
         for (i = 0 ; i < 2 ; i++){
           flippedTiles[i].style.transform = "rotateY(0deg)";
+          
           
         }
         
@@ -215,8 +229,9 @@ tiles.forEach(tile => {
         countFlip++;
         console.log(countFlip);
         //show pop up win
-        if (countFlip / 2 === size){
+        if (countFlip === tiles.length / 2){
           document.querySelector(".popUpWin p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
+          document.querySelector(".popUpWin p:nth-child(3)").textContent = `IN ${updateTime()} `;
           popUp.style.left = "50%";
           popUpWin.style.display = "block"
         }
@@ -236,6 +251,7 @@ tiles.forEach(tile => {
 });
 
 
+
 // Reset timer function
 function resetTimer() {
   clearInterval(timerInterval);
@@ -245,8 +261,6 @@ function resetTimer() {
 
 // Start timer
 startTimer();
-
-
 
 
 

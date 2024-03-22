@@ -19,25 +19,25 @@ const items = [
   { name: "scoobydo", image: "images/scoobydo.png" },
   { name: "veemon", image: "images/veemon.png" },
   { name: "woody", image: "images/woody.png" },
+  { name: "chillywilly", image: "images/chillywilly.png" },
   { name: "arbuckle-garfield", image: "images/arbuckle-garfield.png" },
+  { name: "barbera", image: "images/barbera.png" },
+  { name: "cat", image: "images/cat.png" },
+  { name: "doraemon", image: "images/doraemon.png" },
   { name: "duck", image: "images/duck.png" },
-  { name: "garfield", image: "images/garfield.png" },
+  { name: "finn", image: "images/finn.png" },
+  { name: "jocker", image: "images/jocker.png" },
+  { name: "grandpa", image: "images/grandpa.png" },
+  { name: "jerry", image: "images/jerry.png" },
+  { name: "popeye", image: "images/popeye.png" },
+  { name: "smurf", image: "images/smurf.png" },
   { name: "spongeBob", image: "images/spongeBob.png" },
   { name: "superMario", image: "images/superMario.png" },
-  { name: "doraemon", image: "images/doraemon.png" },
-  { name: "clock", image: "images/clock.png" },
-  { name: "clock", image: "images/clock.png" },
-  { name: "powerpuffGirl", image: "images/powerpuffGirl.png" },
-  { name: "popeye", image: "images/popeye.png" },
-  { name: "chillywilly", image: "images/chillywilly.png" },
-  { name: "finn", image: "images/finn.png" },
-  { name: "yogiBear", image: "images/yogiBear.png" },
-  { name: "barbera", image: "images/barbera.png" },
-  { name: "smurf", image: "images/smurf.png" },
-  { name: "cat", image: "images/cat.png" },
   { name: "tom", image: "images/tom.png" },
-  { name: "jocker", image: "images/jocker.png" },
-  { name: "jerry", image: "images/jerry.png" },
+  { name: "yogiBear", image: "images/yogiBear.png" },
+  { name: "clock", image: "images/clock.png" },
+  { name: "angel", image: "images/angel.jpg" },
+  { name: "bg2", image: "images/bg2.jpg" }
 ];
 
 
@@ -94,7 +94,7 @@ const tiles = document.querySelectorAll(".tile");
 
 document.body.insertAdjacentHTML('beforeend', `
   <div class="signs">
-    <i class="fa-solid fa-xmark xmark"></i>
+      <i class="fa-solid fa-xmark xmark"></i>
     <div class="paragraphe">
       <h2>How To Play</h2>
       <p>Hello Ready to play Memory Game ?
@@ -133,6 +133,7 @@ setTimeout(function() {
 }, 1000);
   
 closeSigns(signs);
+
 setTimeout(function() {
   hiddenSigns(signs);
 }, 30000);
@@ -159,8 +160,21 @@ function updateTime() {
   //format time before displaying
   let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
   let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
-  const timeString = `${minutesValue}:${secondsValue}`;
+  let timeString = `${minutesValue}:${secondsValue}`;
+  return timeString;
 }
+//back to menu 
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="back">
+    <img class="back-to-menu" src="images/arrow-back.png">
+  </div>
+  `);
+
+var arrow_back = document.querySelector(".back-to-menu");
+arrow_back.addEventListener("click", function(){
+  window.open("index.html", "_self");
+});
+
 
 // pop up 
 document.body.insertAdjacentHTML('beforeend', `
@@ -168,7 +182,7 @@ document.body.insertAdjacentHTML('beforeend', `
     <div class="popUpWin">
       <p>YOUPI!  YOU WON</p>
       <p>YOU MADE ${moves} MOVES </p>
-      <p>IN ${timeString} </p>
+      <p>IN ${updateTime()}</p>
       <button type="submit" class="playBtn" >Play</button>
       <button type="submit" class="quitBtn" >QUIT</button>
     </div>
@@ -233,7 +247,7 @@ tiles.forEach(tile => {
         countFlip++;
         console.log(countFlip);
         //show pop up win
-        if (countFlip / 2 === size){
+        if (countFlip === tiles.length / 2){
           document.querySelector(".popUpWin p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
           popUp.style.left = "50%";
           popUpWin.style.display = "block"
@@ -253,15 +267,6 @@ tiles.forEach(tile => {
   });
 });
 
-// Reset timer function
-function resetTimer() {
-  clearInterval(timerInterval);
-  seconds = 0;
-}
-
-
-// Start timer
-startTimer();
 
 
 
