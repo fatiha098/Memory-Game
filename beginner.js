@@ -123,6 +123,7 @@ let seconds = 0,
   minutes = 0;
 let timerInterval;
 
+
 // Function to start the timer
 function startTimer() {
   timerInterval = setInterval(function () {
@@ -158,13 +159,35 @@ arrow_back.addEventListener("click", function(){
 });
 
 
+// Function to start the timer
+function startTimer() {
+  timerInterval = setInterval(function () {
+    seconds++;
+    updateTime();
+  }, 1000); // Update time every second (1000 milliseconds)
+}
+
+function updateTime() {
+  //minutes logic
+  if (seconds >= 60) {
+    minutes += 1;
+    seconds = 0;
+  }
+  //format time before displaying
+  let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
+  let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
+  const timeString = `${minutesValue}:${secondsValue}`;
+}
+
 // pop up 
 document.body.insertAdjacentHTML('beforeend', `
   <div class="popUp">
     <div class="popUpWin">
       <p>YOUPI!  YOU WON</p>
       <p>YOU MADE ${moves} MOVES </p>
+
       <p>IN ${updateTime()} </p>
+      <p>IN ${timeString} </p>
       <button type="submit" class="playBtn" >Play</button>
       <button type="submit" class="quitBtn" >QUIT</button>
     </div>
@@ -251,7 +274,6 @@ tiles.forEach(tile => {
 });
 
 
-
 // Reset timer function
 function resetTimer() {
   clearInterval(timerInterval);
@@ -261,6 +283,10 @@ function resetTimer() {
 
 // Start timer
 startTimer();
+
+
+
+
 
 
 

@@ -268,6 +268,15 @@ tiles.forEach(tile => {
 });
 
 
+// Reset timer function
+function resetTimer() {
+  clearInterval(timerInterval);
+  seconds = 0;
+}
+
+
+// Start timer
+startTimer();
 
 
     
