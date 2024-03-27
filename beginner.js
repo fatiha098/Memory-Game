@@ -1,6 +1,5 @@
 var content_game = document.querySelector(".content");
 
-var  moves = 0 ;
 var countFlip = 0 ;
 const size = 4;
 
@@ -18,18 +17,20 @@ const sound_show = new Audio('audio/show.mpeg');
 
 const items = [
   { name: "monkeyDora", image: "images/monkeyDora.png" },
-  { name: "simpson", image: "images/simpson.png" },
-  { name: "panda", image: "images/panda.png" },
-  { name: "gumball", image: "images/gumball.png" },
-  { name: "jaguar", image: "images/jaguar.png" },
   { name: "ktkouta", image: "images/ktkouta.png" },
-  { name: "mickyMouse", image: "images/mickyMouse.png" },
-  { name: "monkey", image: "images/monkey.png" },
   { name: "pokemon", image: "images/pokemon.png" },
   { name: "rabbit", image: "images/rabbit.png" },
   { name: "scoobydo", image: "images/scoobydo.png" },
   { name: "veemon", image: "images/veemon.png" },
-  { name: "woody", image: "images/woody.png" }
+  { name: "woody", image: "images/woody.png" },
+  { name: "chillywilly", image: "images/chillywilly.png" },
+  { name: "cat", image: "images/cat.png" },
+  { name: "duck", image: "images/duck.png" },
+  { name: "jocker", image: "images/jocker.png" },
+  { name: "jerry", image: "images/jerry.png" },
+  { name: "smurf", image: "images/smurf.png" },
+  { name: "yogiBear", image: "images/yogiBear.png" },
+  { name: "clock", image: "images/clock.png" },
 ];
 
 
@@ -78,7 +79,6 @@ boardGameGenerator(cardValues,size)
 
 
 
-// start game ==> count moves , flip tiles
 
 const tiles = document.querySelectorAll(".tile");
 
@@ -142,18 +142,80 @@ function startTimer() {
   }, 1000); // Update time every second (1000 milliseconds)
 }
 
+
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="time">
+    <p></p>
+  </div>`);
+
+
+// pop up 
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="popUp">
+    <div class="popUpWin">
+      <p>Congratulations!</p>
+      <p>You've completed the challenge successfully.</p>
+      <p> Well done!"</p>
+
+      <button type="submit" class="playBtn" >Play Again</button>
+    </div>
+    <div class="popUpLoose">
+      <p>Oops! Time's up. </p>
+      <p>You didn't manage to complete the challenge in time. Better luck next time!</p>
+      <button type="submit" class="playBtn1" >Play Again</button>
+    </div>
+  </div>
+`);
+
+var popUpWin = document.querySelector(".popUpWin");
+var popUpLoose = document.querySelector(".popUpLoose");
+var popUp = document.querySelector(".popUp");
+var playBtn = document.querySelector(".playBtn");
+var playBtn1 = document.querySelector(".playBtn1");
+
+
 function updateTime() {
   //minutes logic
   if (seconds >= 60) {
     minutes += 1;
     seconds = 0;
   }
-  //format time before displaying
+  // Format time before displaying
   let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
   let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
   let timeString = `${minutesValue}:${secondsValue}`;
-  return timeString;
+
+  if (minutes < 1) {
+    // Update time display
+    time = document.querySelector(".time p").textContent = `${timeString}`;
+    // Check if all tiles are flipped
+    if (countFlip === tiles.length / 2) {      
+      popUpWin.style.display = "block";
+      popUp.style.left = "50%";
+      clearInterval(timerInterval); // Stop the timer when the player wins
+      sound_win.play(); // Play win sound
+    }
+  } else {
+    // Display the popUpLoose if time exceeds 2 minutes
+    popUpLoose.style.display = "block";
+    popUp.style.left = "50%";
+    clearInterval(timerInterval); // Stop the timer when the time exceeds 2 minutes
+    sound_fail.play(); // Play fail sound
+  }
+
 }
+
+
+playBtn.addEventListener("click", function(){
+  sound_blurp.play();
+  window.open("../memory-Game/beginner.html",target="_self");
+  
+})
+
+playBtn1.addEventListener("click", function(){
+  window.open("../memory-Game/beginner.html",target="_self");
+  sound_fail.play()
+})
 
 
 //back to menu 
@@ -169,40 +231,6 @@ arrow_back.addEventListener("click", function(){
 });
 
 
-// pop up 
-document.body.insertAdjacentHTML('beforeend', `
-  <div class="popUp">
-    <div class="popUpWin">
-      <p>YOUPI!  YOU WON</p>
-      <p>YOU MADE ${moves} MOVES </p>
-      <p>IN ${updateTime()} </p>
-      <button type="submit" class="playBtn" >Play</button>
-      <button type="submit" class="quitBtn" >QUIT</button>
-    </div>
-    <div class="popUpLoose">
-      <p>OOPS! TIME OVER </p>
-      <p>TRY AGAIN</p>
-      <p>YOU MADE ${moves} MOVES </p>
-      <button type="submit" class="playBtn" >Play</button>
-      <button type="submit" class="quitBtn" >QUIT</button>
-    </div>
-  </div>
-`);
-
-var popUpWin = document.querySelector(".popUpWin");
-var popUpLoose = document.querySelector(".popUpLoose");
-var popUp = document.querySelector(".popUp");
-var playBtn = document.querySelector(".playBtn");
-var quitBtn = document.querySelector(".quitBtn");
-
-
-playBtn.addEventListener("click", function(){
-  window.open("../memory-Game/beginner.html",target="_self");
-})
-
-quitBtn.addEventListener("click", function(){
-  window.close()
-})
 
 
 tiles.forEach(tile => {
@@ -211,7 +239,6 @@ tiles.forEach(tile => {
     sound_click.play();
     tile.classList.add('flipped');
     tile.style.transform = "rotateY(-180deg)";// Show backface on click
-    moves += 1;
   });
     
   
@@ -222,6 +249,7 @@ tiles.forEach(tile => {
     if (flippedTiles.length === 2) {
       // Hide both flipped tiles if there are exactly two flipped
       if (flippedTiles[0].getAttribute("data-tile-name") !== flippedTiles[1].getAttribute("data-tile-name") ){
+        sound_unmatch.play();
         for (i = 0 ; i < 2 ; i++){
           flippedTiles[i].style.transform = "rotateY(0deg)";
           
@@ -234,21 +262,7 @@ tiles.forEach(tile => {
         sound_match.play();
         countFlip++;
 
-        //show pop up win
-        if (countFlip === tiles.length / 2){
-          document.querySelector(".popUpWin p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
-          document.querySelector(".popUpWin p:nth-child(3)").textContent = `IN ${updateTime()} `;
-          popUp.style.left = "50%";
-          popUpWin.style.display = "block"
-        }
-        //show pop up loose
-        // else( if time is finished and the user not yet completed ){
-        //   popUpLoose.style.display = "block";
-        // }
-        // else if (countFlip !== 8 and time over){
-        //             document.querySelector(".popUpLoose p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
-        //   popUpLoose.style.display = "block";
-        // }
+        
       }
       flippedTiles.forEach(flippedTile => flippedTile.classList.remove('flipped'));
       
@@ -257,60 +271,10 @@ tiles.forEach(tile => {
 });
 
 
-
-// Reset timer function
-function resetTimer() {
-  clearInterval(timerInterval);
-  seconds = 0;
-}
-
-
 // Start timer
 startTimer();
 
 
-// let firstCard = null,
-// secondCard = null;
-// let canClick = true; 
-// let score = 0;
-// tiles.forEach(tile  => tile.addEventListener('click', handleClick));
-
-// function handleClick(){
-//     sound_click.play();
-//     if(!canClick) return;
-//     if (this.classList.contains("flip")) return; //if the card is already flipped, stop here and do nothing
-//     this.classList.add("flip");
-//     if (!firstCard) firstCard = this;
-//     else if (!secondCard) secondCard = this; 
-
-//     let img1 = firstCard ? firstCard.firstElementChild.src : null;
-//     let img2 = secondCard ?  secondCard.firstElementChild.src : null;
-
-//     if (img1 === img2){
-//         sound_match.play();
-//         firstCard = null;
-//         secondCard = null;
-//         score++;
-//         if (score == tiles.length / 2 ){
-//             sound_win.play();
-
-//             popUp.style.left = "50%";
-//             popUpWin.style.display = "block";
-//         }
-
-//     }
-//     else if (img1 && img2){
-//         sound_unmatch.play();
-//         canClick = false;
-//         setTimeout(() => {
-//             firstCard.classList.remove("flip");
-//             secondCard.classList.remove("flip");
-//             firstCard = null;
-//             secondCard = null;
-//             canClick = true;
-//         }, 1000);
-//     }
-// }
 
 
 
