@@ -4,6 +4,17 @@ var  moves = 0 ;
 var countFlip = 0 ;
 const size = 4;
 
+const sound_click = new Audio('audio/click.mpeg');
+const sound_clickk = new Audio('audio/clickk.mpeg');
+const sound_blurp = new Audio('audio/blurp.aac');
+const sound_clock = new Audio('audio/clock.aac');
+const sound_eye = new Audio('audio/eye.mpeg');
+const sound_win = new Audio('audio/win.mpeg');
+const sound_win2 = new Audio('audio/win2.mpeg');
+const sound_fail = new Audio('audio/fail.mpeg');
+const sound_match = new Audio('audio/match.mpeg');
+const sound_unmatch = new Audio('audio/unmatch.mpeg');
+const sound_show = new Audio('audio/show.mpeg');
 
 const items = [
   { name: "monkeyDora", image: "images/monkeyDora.png" },
@@ -123,7 +134,6 @@ let seconds = 0,
   minutes = 0;
 let timerInterval;
 
-
 // Function to start the timer
 function startTimer() {
   timerInterval = setInterval(function () {
@@ -159,35 +169,13 @@ arrow_back.addEventListener("click", function(){
 });
 
 
-// Function to start the timer
-function startTimer() {
-  timerInterval = setInterval(function () {
-    seconds++;
-    updateTime();
-  }, 1000); // Update time every second (1000 milliseconds)
-}
-
-function updateTime() {
-  //minutes logic
-  if (seconds >= 60) {
-    minutes += 1;
-    seconds = 0;
-  }
-  //format time before displaying
-  let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
-  let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
-  const timeString = `${minutesValue}:${secondsValue}`;
-}
-
 // pop up 
 document.body.insertAdjacentHTML('beforeend', `
   <div class="popUp">
     <div class="popUpWin">
       <p>YOUPI!  YOU WON</p>
       <p>YOU MADE ${moves} MOVES </p>
-
       <p>IN ${updateTime()} </p>
-      <p>IN ${timeString} </p>
       <button type="submit" class="playBtn" >Play</button>
       <button type="submit" class="quitBtn" >QUIT</button>
     </div>
@@ -220,6 +208,7 @@ quitBtn.addEventListener("click", function(){
 tiles.forEach(tile => {
     // Handle hover events for flipping
     tile.addEventListener('click', () => {
+    sound_click.play();
     tile.classList.add('flipped');
     tile.style.transform = "rotateY(-180deg)";// Show backface on click
     moves += 1;
@@ -236,21 +225,15 @@ tiles.forEach(tile => {
         for (i = 0 ; i < 2 ; i++){
           flippedTiles[i].style.transform = "rotateY(0deg)";
           
-          
         }
         
       }
       
       else {
         // when two tiles turned ae similar
-        for (i = 0 ; i < 2 ; i++){
-          flippedTiles[i].style.transform = "rotateY(0deg)";
-          let frontImage = flippedTiles[i].querySelector(".front img");
-          frontImage.setAttribute("src","images/checked.png");
-          
-        }
+        sound_match.play();
         countFlip++;
-        console.log(countFlip);
+
         //show pop up win
         if (countFlip === tiles.length / 2){
           document.querySelector(".popUpWin p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
@@ -274,6 +257,7 @@ tiles.forEach(tile => {
 });
 
 
+
 // Reset timer function
 function resetTimer() {
   clearInterval(timerInterval);
@@ -285,9 +269,48 @@ function resetTimer() {
 startTimer();
 
 
+// let firstCard = null,
+// secondCard = null;
+// let canClick = true; 
+// let score = 0;
+// tiles.forEach(tile  => tile.addEventListener('click', handleClick));
 
+// function handleClick(){
+//     sound_click.play();
+//     if(!canClick) return;
+//     if (this.classList.contains("flip")) return; //if the card is already flipped, stop here and do nothing
+//     this.classList.add("flip");
+//     if (!firstCard) firstCard = this;
+//     else if (!secondCard) secondCard = this; 
 
+//     let img1 = firstCard ? firstCard.firstElementChild.src : null;
+//     let img2 = secondCard ?  secondCard.firstElementChild.src : null;
 
+//     if (img1 === img2){
+//         sound_match.play();
+//         firstCard = null;
+//         secondCard = null;
+//         score++;
+//         if (score == tiles.length / 2 ){
+//             sound_win.play();
+
+//             popUp.style.left = "50%";
+//             popUpWin.style.display = "block";
+//         }
+
+//     }
+//     else if (img1 && img2){
+//         sound_unmatch.play();
+//         canClick = false;
+//         setTimeout(() => {
+//             firstCard.classList.remove("flip");
+//             secondCard.classList.remove("flip");
+//             firstCard = null;
+//             secondCard = null;
+//             canClick = true;
+//         }, 1000);
+//     }
+// }
 
 
 
