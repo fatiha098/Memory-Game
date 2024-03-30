@@ -1,8 +1,7 @@
 var content_game = document.querySelector(".content");
 
-var  moves = 0 ;
 var countFlip = 0 ;
-const size = 8;
+const size = 4;
 
 const sound_click = new Audio('audio/click.mpeg');
 const sound_clickk = new Audio('audio/clickk.mpeg');
@@ -10,50 +9,33 @@ const sound_blurp = new Audio('audio/blurp.aac');
 const sound_clock = new Audio('audio/clock.aac');
 const sound_eye = new Audio('audio/eye.mpeg');
 const sound_win = new Audio('audio/win.mpeg');
-const sound_win2 = new Audio('audio/win2.mpeg');
+const sound_shuffle = new Audio('audio/shuffle.aac');
 const sound_fail = new Audio('audio/fail.mpeg');
 const sound_match = new Audio('audio/match.mpeg');
 const sound_unmatch = new Audio('audio/unmatch.mpeg');
 const sound_show = new Audio('audio/show.mpeg');
+const sound_start = new Audio('audio/start.mpeg');
+
 
 const items = [
   { name: "monkeyDora", image: "images/monkeyDora.png" },
-  { name: "simpson", image: "images/simpson.png" },
-  { name: "panda", image: "images/panda.png" },
-  { name: "gumball", image: "images/gumball.png" },
-  { name: "jaguar", image: "images/jaguar.png" },
   { name: "ktkouta", image: "images/ktkouta.png" },
-  { name: "mickyMouse", image: "images/mickyMouse.png" },
-  { name: "monkey", image: "images/monkey.png" },
   { name: "pokemon", image: "images/pokemon.png" },
   { name: "rabbit", image: "images/rabbit.png" },
-  { name: "scoobydo", image: "images/scoobydo.png" },
-  { name: "veemon", image: "images/veemon.png" },
+  // { name: "scoobydo", image: "images/scoobydo.png" },
   { name: "woody", image: "images/woody.png" },
   { name: "chillywilly", image: "images/chillywilly.png" },
-  { name: "arbuckle-garfield", image: "images/arbuckle-garfield.png" },
-  { name: "barbera", image: "images/barbera.png" },
-  { name: "cat", image: "images/cat.png" },
-  { name: "doraemon", image: "images/doraemon.png" },
-  { name: "duck", image: "images/duck.png" },
-  { name: "finn", image: "images/finn.png" },
+  // { name: "cat", image: "images/cat.png" },
   { name: "jocker", image: "images/jocker.png" },
-  { name: "grandpa", image: "images/grandpa.png" },
-  { name: "jerry", image: "images/jerry.png" },
-  { name: "popeye", image: "images/popeye.png" },
-  { name: "smurf", image: "images/smurf.png" },
-  { name: "spongeBob", image: "images/spongeBob.png" },
-  { name: "superMario", image: "images/superMario.png" },
-  { name: "tom", image: "images/tom.png" },
-  { name: "yogiBear", image: "images/yogiBear.png" },
+  // { name: "jerry", image: "images/jerry.png" },
+  // { name: "smurf", image: "images/smurf.png" },
+  // { name: "yogiBear", image: "images/yogiBear.png" },
   { name: "clock", image: "images/clock.png" },
-  { name: "angel", image: "images/angel.jpg" },
-  { name: "bg2", image: "images/bg2.jpg" }
 ];
 
 
 
-const generateRandom = (size = 8) => {
+const generateRandom = (size = 4) => {
   //temporary array
   let tempArray = Array.from(items);
   //initializes cardValues array
@@ -72,7 +54,7 @@ const generateRandom = (size = 8) => {
 
 
 
-const boardGameGenerator = (cardValues, size = 8) => {
+const boardGameGenerator = (cardValues, size = 4) => {
   content_game.innerHTML = "";
   cardValues = [...cardValues, ...cardValues];
   //simple shuffle
@@ -93,11 +75,10 @@ const boardGameGenerator = (cardValues, size = 8) => {
 }
 
 const cardValues = generateRandom(size);
-boardGameGenerator(cardValues,size) 
+boardGameGenerator(cardValues,size) ;// Generate game with default values
 
 
 
-// start game ==> count moves , flip tiles
 
 const tiles = document.querySelectorAll(".tile");
 
@@ -105,12 +86,12 @@ const tiles = document.querySelectorAll(".tile");
 
 document.body.insertAdjacentHTML('beforeend', `
   <div class="signs">
-      <i class="fa-solid fa-xmark xmark"></i>
+    <i class="fa-solid fa-xmark xmark"></i>
     <div class="paragraphe">
       <h2>How To Play</h2>
       <p>Hello Ready to play Memory Game ?
           In this game you'll need your memory skills.
-          Click on any2 tiles to turn them over. 
+          Click on any 2 tiles to turn them over. 
           If the pictures on the tiles match,
           you have a pair!</p>
     </div>
@@ -134,20 +115,53 @@ function hiddenSigns(signs) {
 
 function closeSigns(signs){
   xmark.addEventListener("click",function(){
-    xmark.style.color = "red";
-    hiddenSigns(signs);
+  hiddenSigns(signs);
   })
 }
 
 setTimeout(function() {
   showSigns(signs);
 }, 1000);
-  
+
 closeSigns(signs);
 
 setTimeout(function() {
   hiddenSigns(signs);
 }, 30000);
+
+
+
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="time">
+    <p></p>
+  </div>`);
+
+
+// pop up 
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="popUp">
+    <div class="popUpWin">
+      <p>Congratulations!</p>
+      <p>You've completed the challenge successfully.</p>
+      <p> Well done!"</p>
+
+      <button type="submit" class="playBtn" >Play Again</button>
+    </div>
+    <div class="popUpLoose">
+      <p>Oops! Time's up. </p>
+      <p>You didn't manage to complete the challenge in time. Better luck next time!</p>
+      <button type="submit" class="playBtn1" >Play Again</button>
+    </div>
+  </div>
+`);
+
+var popUpWin = document.querySelector(".popUpWin");
+var popUpLoose = document.querySelector(".popUpLoose");
+var popUp = document.querySelector(".popUp");
+var playBtn = document.querySelector(".playBtn");
+var playBtn1 = document.querySelector(".playBtn1");
+
+
 
 //Initial Time
 let seconds = 0,
@@ -168,12 +182,44 @@ function updateTime() {
     minutes += 1;
     seconds = 0;
   }
-  //format time before displaying
+  // Format time before displaying
   let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
   let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
   let timeString = `${minutesValue}:${secondsValue}`;
-  return timeString;
+
+  if (minutes < 1) {
+    // Update time display
+    time = document.querySelector(".time p").textContent = `${timeString}`;
+    // Check if all tiles are flipped
+    if (countFlip === tiles.length / 2) {      
+      popUpWin.style.display = "block";
+      popUp.style.left = "50%";
+      clearInterval(timerInterval); // Stop the timer when the player wins
+      sound_win.play(); // Play win sound
+    }
+  } else {
+    // Display the popUpLoose if time exceeds 1 minute
+    popUpLoose.style.display = "block";
+    popUp.style.left = "50%";
+    clearInterval(timerInterval); // Stop the timer when the time exceeds 1 minute
+    sound_fail.play(); // Play fail sound
+  }
+
 }
+
+
+playBtn.addEventListener("click", function(){
+  sound_blurp.play();
+  window.open("../memory-Game/beginner.html",target="_self");
+  
+})
+
+playBtn1.addEventListener("click", function(){
+  window.open("../memory-Game/beginner.html",target="_self");
+  sound_fail.play();
+})
+
+
 //back to menu 
 document.body.insertAdjacentHTML('beforeend', `
   <div class="back">
@@ -187,50 +233,27 @@ arrow_back.addEventListener("click", function(){
 });
 
 
-// pop up 
-document.body.insertAdjacentHTML('beforeend', `
-  <div class="popUp">
-    <div class="popUpWin">
-      <p>YOUPI!  YOU WON</p>
-      <p>YOU MADE ${moves} MOVES </p>
-      <p>IN ${updateTime()}</p>
-      <button type="submit" class="playBtn" >Play</button>
-      <button type="submit" class="quitBtn" >QUIT</button>
-    </div>
-    <div class="popUpLoose">
-      <p>OOPS! TIME OVER </p>
-      <p>TRY AGAIN</p>
-      <p>YOU MADE ${moves} MOVES </p>
-      <button type="submit" class="playBtn" >Play</button>
-      <button type="submit" class="quitBtn" >QUIT</button>
-    </div>
-  </div>
-`);
-
-var popUpWin = document.querySelector(".popUpWin");
-var popUpLoose = document.querySelector(".popUpLoose");
-var popUp = document.querySelector(".popUp");
-var playBtn = document.querySelector(".playBtn");
-var quitBtn = document.querySelector(".quitBtn");
+// Function to shuffle tiles randomly
+function shuffleTiles() {
+  const tilesArray = Array.from(tiles);
+  tilesArray.forEach(tile => {
+      const randomPos = Math.floor(Math.random() * tilesArray.length);
+      tile.style.order = randomPos;
+  });
+}
 
 
-playBtn.addEventListener("click", function(){
-  window.open("../memoryGame/beginner.html",target="_self");
-})
-
-quitBtn.addEventListener("click", function(){
-  window.close()
-})
-
-
+let isFirstClick = true;
 tiles.forEach(tile => {
-  // Handle hover events for flipping
-  tile.addEventListener('click', () => {
-    sound_click.play();
-    tile.classList.add('flipped');
-    tile.style.transform = "rotateY(-180deg)";// Show backface on click
-    moves += 1;
-    
+    // Handle hover events for flipping
+    tile.addEventListener('click', () => {
+      if (isFirstClick) {
+        isFirstClick = false;
+        startTimer(); // Start the timer on first click
+      }
+      sound_click.play();
+      tile.classList.add('flipped');
+      tile.style.transform = "rotateY(-180deg)";// Show backface on click
   });
     
   
@@ -240,7 +263,11 @@ tiles.forEach(tile => {
 
     if (flippedTiles.length === 2) {
       // Hide both flipped tiles if there are exactly two flipped
-      if (flippedTiles[0].getAttribute("data-tile-name") !== flippedTiles[1].getAttribute("data-tile-name") ){
+
+      const tile1 = flippedTiles[0].getAttribute("data-tile-name");
+      const tile2 = flippedTiles[1].getAttribute("data-tile-name");
+      if (tile1 !== tile2){
+        sound_unmatch.play();
         for (i = 0 ; i < 2 ; i++){
           flippedTiles[i].style.transform = "rotateY(0deg)";
           
@@ -250,33 +277,24 @@ tiles.forEach(tile => {
       
       else {
         // when two tiles turned ae similar
-
-        countFlip++;
         sound_match.play();
-        //show pop up win
-        if (countFlip === tiles.length / 2){
-          sound_win.play();
-          document.querySelector(".popUpWin p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
-          popUp.style.left = "50%";
-          popUpWin.style.display = "block"
+        if (tile1 === "clock") {
+          sound_clock.play(); 
+          seconds -= 5; // Add 5 seconds for clock match
+          updateTime(); // Update timer display
         }
-        //show pop up loose
-        // else( if time is finished and the user not yet completed ){
-        //   popUpLoose.style.display = "block";
-        // }
-        // else if (countFlip !== 8 and time over){
-        //             document.querySelector(".popUpLoose p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
-        //   popUpLoose.style.display = "block";
-        // }
+        else if (tile1 === "jocker" || tile2 === "jocker") {
+          sound_shuffle.play();
+          // Handle shuffle card functionality
+          setTimeout(() => {
+              shuffleTiles(); // Shuffle the tiles
+          }, 1000); // Delay before shuffling tiles
+        }
+        countFlip++;
       }
       flippedTiles.forEach(flippedTile => flippedTile.classList.remove('flipped'));
       
     }
   });
 });
-
-
-
-
-    
 
