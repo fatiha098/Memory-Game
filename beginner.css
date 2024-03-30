@@ -39,7 +39,8 @@ body {
   grid-template-columns: repeat(4,1fr);
   place-items: center; 
   gap: 0.6em;
-  position: relative
+  position: relative;
+  perspective: 1000px;
 }
 
 .tile {
@@ -47,8 +48,13 @@ body {
   width: 120px;
   height: 120px;
   position: relative;
-  transform-style: preserve-3d;/*conserve the 3d state*/
+  transform-style: preserve-3d;
   transition: 0.8s;
+}
+
+.tile:active {
+  transform: scale(.95);
+  transition: all .2s ;
 }
 
 img {
@@ -79,7 +85,6 @@ transform: rotateY(0deg)
   border-radius: 10px;
 }
 
-/* pop up win */
 .popUp {
   width: 250px;
   height: 170px;
@@ -102,6 +107,7 @@ transform: rotateY(0deg)
   border-radius: 10px;
   padding: 20px;
   text-align: center;
+  box-shadow: 0px 0px 10px 2px #f8f8f8;
 }
 
 .popUpWin{
@@ -115,12 +121,13 @@ transform: rotateY(0deg)
 .popUpWin p , 
 .popUpLoose p {
   text-align: center;
-  font-size: 18px;
+  font-size: 15px;
   margin-bottom: 0;
   font-family: "DynaPuff";
 }
 
-.playBtn, .quitBtn {
+.playBtn, 
+.playBtn1 {
   padding: 10px 20px;
   border-radius: 10px;
   color: white;
@@ -132,11 +139,13 @@ transform: rotateY(0deg)
   font-family: "DynaPuff";
 }
 
-.playBtn:hover, .quitBtn:hover{
+.playBtn:hover, 
+.playBtn1:hover{
   opacity: 0.7;
   cursor: pointer;
 }
-/* signs */
+
+
 .signs {
   position: absolute;
   top: 18%;
@@ -182,7 +191,6 @@ transform: rotateY(0deg)
 }
 
 
-/*arrow back*/
 .back {
   width: 10rem; 
   text-align: center;
@@ -195,3 +203,22 @@ transform: rotateY(0deg)
 }
 
 
+/*time*/
+.time {
+  background-image: url(../Memory-Game/images/wood.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 7rem;
+  padding: 2rem;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  position: absolute;
+  left: 46%;
+  top: 1%;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  font-family: 'Times New Roman', Times, serif;
+}

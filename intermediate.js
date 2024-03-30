@@ -4,6 +4,17 @@ var  moves = 0 ;
 var countFlip = 0 ;
 const size = 6;
 
+const sound_click = new Audio('audio/click.mpeg');
+const sound_clickk = new Audio('audio/clickk.mpeg');
+const sound_blurp = new Audio('audio/blurp.aac');
+const sound_clock = new Audio('audio/clock.aac');
+const sound_eye = new Audio('audio/eye.mpeg');
+const sound_win = new Audio('audio/win.mpeg');
+const sound_win2 = new Audio('audio/win2.mpeg');
+const sound_fail = new Audio('audio/fail.mpeg');
+const sound_match = new Audio('audio/match.mpeg');
+const sound_unmatch = new Audio('audio/unmatch.mpeg');
+const sound_show = new Audio('audio/show.mpeg');
 
 const items = [
   { name: "monkeyDora", image: "images/monkeyDora.png" },
@@ -200,10 +211,10 @@ quitBtn.addEventListener("click", function(){
   window.close()
 })
 
-
 tiles.forEach(tile => {
   // Handle hover events for flipping
   tile.addEventListener('click', () => {
+    sound_click.play();
     tile.classList.add('flipped');
     tile.style.transform = "rotateY(-180deg)";// Show backface on click
     moves += 1;
@@ -227,6 +238,7 @@ tiles.forEach(tile => {
       
       else {
         // when two tiles turned ae similar
+        sound_match.play();
         for (i = 0 ; i < 2 ; i++){
           flippedTiles[i].style.transform = "rotateY(0deg)";
           let frontImage = flippedTiles[i].querySelector(".front img");
@@ -234,10 +246,9 @@ tiles.forEach(tile => {
           
         }
         countFlip++;
-        console.log(countFlip);
         //show pop up win
         if (countFlip / 3 === size){
-          document.querySelector(".popUpWin p:nth-child(2)").textContent = `YOU MADE ${moves} MOVES`;
+          sound_win.play();
           popUp.style.left = "50%";
           popUpWin.style.display = "block"
         }
@@ -255,6 +266,17 @@ tiles.forEach(tile => {
     }
   });
 });
+
+
+// Reset timer function
+function resetTimer() {
+  clearInterval(timerInterval);
+  seconds = 0;
+}
+
+
+// Start timer
+startTimer();
 
 
 
